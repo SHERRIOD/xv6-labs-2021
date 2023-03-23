@@ -315,6 +315,9 @@ fork(void)
   np->state = RUNNABLE;
   release(&np->lock);
 
+  acquire(&np->lock);
+  np->new_id = p->new_id;
+  release(&np->lock);
   return pid;
 }
 

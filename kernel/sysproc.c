@@ -95,3 +95,16 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+uint64
+sys_trace(void)
+{
+  // printf("i am in sys_trace\n");
+  int id;
+  if(argint(0,&id)<0){
+    return -1;
+  }
+  
+  myproc()->new_id=id;
+  return 0;
+}

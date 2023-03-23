@@ -13,8 +13,9 @@ main(int argc, char *argv[])
     fprintf(2, "Usage: %s mask command\n", argv[0]);
     exit(1);
   }
-
+//	printf("i am in the trace before\n");
   if (trace(atoi(argv[1])) < 0) {
+	//  printf("yes i am in the user/trace.c\n");
     fprintf(2, "%s: trace failed\n", argv[0]);
     exit(1);
   }
