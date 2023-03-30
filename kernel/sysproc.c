@@ -6,6 +6,7 @@
 #include "memlayout.h"
 #include "spinlock.h"
 #include "proc.h"
+#include "sysinfo.h"
 
 uint64
 sys_exit(void)
@@ -106,5 +107,25 @@ sys_trace(void)
   }
   
   myproc()->new_id=id;
+  return 0;
+}
+
+uint64
+sys_sysinfo(void){
+  //obtain the infomation of system
+  struct sysinfo tmp;
+  tmp.freemem = avamem();
+  tmp.nproc = procount();
+
+  //fetch the virtual address of user space
+  uint64 addr;
+  if(argaddr(0, &addr) < 0)
+    return -1;
+  
+  //copy the tmp to the virtual address
+  struct proc *p = myproc();
+  if(copyout(p->pagetable, addr, (char *)&tmp, sizeof(tmp)) < 0)
+    return -1;
+
   return 0;
 }
